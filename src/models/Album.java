@@ -7,24 +7,22 @@ import java.util.Objects;
 public class Album
 {
     private static Integer albumsCounter ;
-    private Integer albumId;
     private String title;
     private String artist;
     private String genre;
     private List<Song> songs;
-    private String releaseDate;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return Objects.equals(title, album.title) && Objects.equals(artist, album.artist) && Objects.equals(genre, album.genre) && Objects.equals(songs, album.songs) && Objects.equals(releaseDate, album.releaseDate) && Objects.equals(albumId, album.albumId);
+        return Objects.equals(title, album.title) && Objects.equals(artist, album.artist) && Objects.equals(genre, album.genre) && Objects.equals(songs, album.songs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, artist, genre, songs, releaseDate, albumId);
+        return Objects.hash(title, artist, genre, songs);
     }
 
     public Album()
@@ -32,32 +30,20 @@ public class Album
         this.title = "";
         this.artist = "";
         this.songs = new ArrayList<>();
-        this.releaseDate = "";
         this.genre = " ";
     }
-    public Album(String title, String artist, String releaseDate,String genre,Integer albumID) {
+    public Album(String title, String artist, String genre) {
         this.title = title;
         this.artist = artist;
         this.songs = new ArrayList<>();
-        this.releaseDate = releaseDate;
         this.genre = genre;
-        this.albumId = albumID;
     }
-    public Album(String title, String artist, List<Song> songs, String releaseDate,String genre)
+    public Album(String title, String artist, List<Song> songs, String genre)
     {
         this.title = title;
         this.artist = artist;
         this.songs = new ArrayList<>(songs);
-        this.releaseDate = releaseDate;
         this.genre = genre;
-    }
-
-    public Integer getAlbumID() {
-        return albumId;
-    }
-
-    public void setAlbumID(Integer albumID) {
-        this.albumId = albumID;
     }
 
     public static Integer getNumAlbumsAdded() {
@@ -96,14 +82,6 @@ public class Album
     public void setSongs(List<Song> songs) {
 
         this.songs = new ArrayList<>(songs);
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
     }
 
     public List<Song> getSongs() {
