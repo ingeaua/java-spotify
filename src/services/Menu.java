@@ -68,7 +68,8 @@ public class Menu {
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
-        releaseRadar = ReleaseRadarRepo.getReleaseRadar();
+        releaseRadar = new ReleaseRadar();
+        releaseRadar.update(SongRepo.getSongList());
 
         int option;
 
@@ -148,13 +149,13 @@ public class Menu {
                     deletePlaylist();
                     break;
                 case 24:
-                    //showReleaseRadar(); todo
+                    showReleaseRadar();
                     break;
                 case 25:
                     showMostListenedSong();
                     break;
                 case 26:
-                    //showTotalTimeListenedToday(); todo
+                    showTotalTimeListenedToday();
                     break;
                 case 27:
                      boolean deleted = deleteAccount();
@@ -177,11 +178,13 @@ public class Menu {
     private void addSong() {
         Song song = ReadService.readSong(null);
         SongRepo.addSong(song);
+        releaseRadar.update(SongRepo.getSongList());
     }
 
     private void addAlbum() {
         Album album = ReadService.readAlbum();
         AlbumRepo.addAlbum(album);
+        releaseRadar.update(SongRepo.getSongList());
     }
 
     private void addPodcast() {
@@ -213,6 +216,7 @@ public class Menu {
         System.out.print(">");
         String title= scanner.nextLine();
         SongRepo.deleteSong(title);
+        releaseRadar.update(SongRepo.getSongList());
     }
 
     private void deleteAlbum() {
@@ -223,6 +227,7 @@ public class Menu {
         System.out.print(">");
         String title= scanner.nextLine();
         AlbumRepo.deleteAlbum(title);
+        releaseRadar.update(SongRepo.getSongList());
     }
 
     private void deletePodcast() {
@@ -347,7 +352,16 @@ public class Menu {
         loggedInUser.getPlaylist(playlistName).addSong(song);
     }
 
+    private void showTotalTimeListenedToday() {
+        String time = SongRepo.formatDuration(loggedInUser.showTimeListenedToday());
+        System.out.println("Today you listened for " + time + "!");
+    }
+
     private void showMostListenedSong() {
         loggedInUser.showMostListenedSong();
+    }
+
+    private void showReleaseRadar() {
+        releaseRadar.show();
     }
 }

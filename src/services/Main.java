@@ -6,7 +6,6 @@ package services;
 
 import models.User;
 import repositories.UserRepo;
-
 import java.util.Scanner;
 
 public class Main {

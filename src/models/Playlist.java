@@ -8,7 +8,7 @@ public class Playlist {
 
     private String playlistName;
     private String description;
-    private List<Song> songs;
+    protected List<Song> songs;
     private String userName;
 
 

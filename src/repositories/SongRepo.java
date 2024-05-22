@@ -65,6 +65,32 @@ public class SongRepo {
 
     }
 
+    public static List<Song> getSongList() {
+        try {
+            String query = "SELECT * FROM songs";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet= statement.executeQuery();
+
+            List<Song> songs = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String artist = resultSet.getString("artist");
+                String genre = resultSet.getString("genre");
+                String album = resultSet.getString("albumTitle");
+                int duration = resultSet.getInt("duration");
+                songs.add(new Song(title, genre, artist, duration, album));
+            }
+
+            return songs;
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when getting song list!");
+            return null;
+        }
+    }
+
     public static void deleteSong(String title) {
         try {
             String query = "DELETE FROM songs WHERE title = ?";

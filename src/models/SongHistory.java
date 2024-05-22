@@ -46,4 +46,21 @@ public class SongHistory {
                             " and you listened to it " + maxPlays + " times! :)");
 
     }
+
+    public int showTimeListenedToday() {
+        LocalDateTime today = LocalDateTime.now().toLocalDate().atStartOfDay();
+        int totalListeningTime = 0;
+        
+        for (Song song : history.keySet()) {
+            int numDatesToday = 0;
+            for (LocalDateTime date : history.get(song)) {
+                if (date.isAfter(today)) {
+                    numDatesToday++;
+                }
+            }
+            totalListeningTime += numDatesToday * song.getDuration();
+        }
+        
+        return totalListeningTime;
+    }
 }

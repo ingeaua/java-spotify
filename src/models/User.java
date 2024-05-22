@@ -79,6 +79,10 @@ public class User {
         queue.clear();
     }
 
+    public int showTimeListenedToday() {
+        return history.showTimeListenedToday();
+    }
+
     public String getUsername() {
         return username;
     }
