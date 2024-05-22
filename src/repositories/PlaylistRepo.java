@@ -65,29 +65,6 @@ public class PlaylistRepo {
 
     }
 
-    public static Playlist getPlaylistByName(String playlistName) {
-
-        try
-        {
-            String query = "SELECT * FROM playlists WHERE name = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, playlistName);
-            ResultSet resultSet = statement.executeQuery();
-
-            resultSet.next();
-
-            String description = resultSet.getString("description");
-            List<Song> songs = SongRepo.getSongsByPlaylist(playlistName);
-
-            return new Playlist(playlistName, description, songs);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error when getting Playlists (by username)!");
-            return null;
-        }
-    }
-
     public static void showPlaylists() {
 
         try

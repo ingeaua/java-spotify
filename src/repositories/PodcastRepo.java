@@ -3,7 +3,6 @@ package repositories;
 import models.Podcast;
 import database.DatabaseConfiguration;
 import java.sql.*;
-import java.util.Objects;
 
 public class PodcastRepo {
     private static Connection connection = DatabaseConfiguration.getConnection();

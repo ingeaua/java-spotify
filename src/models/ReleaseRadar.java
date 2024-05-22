@@ -36,17 +36,4 @@ public class ReleaseRadar extends Playlist
         }
     }
 
-
-
-    public static int getNumberSongsAdded() {
-        return songsCounter;
-    }
-
-    public static int getNumSongsAdded() {
-        return songsCounter;
-    }
-
-    public static void setNumSongsAdded(int numSongsAdded) {
-        ReleaseRadar.songsCounter = numSongsAdded;
-    }
 }

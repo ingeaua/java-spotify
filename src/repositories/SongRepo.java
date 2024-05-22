@@ -1,6 +1,5 @@
 package repositories;
 
-import models.Playlist;
 import models.Song;
 import database.DatabaseConfiguration;
 import java.sql.*;

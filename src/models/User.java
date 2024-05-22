@@ -14,13 +14,6 @@ public class User {
     private SongHistory history;
     private Deque<Song> queue;
 
-    public User() {
-        this.playlists = new ArrayList<>();
-        this.queue = new ArrayDeque<>() {
-        };
-        this.history = new SongHistory();
-    }
-
     // constructor
     public User(String username, String password, String email) {
         this.username = username;

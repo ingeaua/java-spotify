@@ -1,15 +1,12 @@
 package repositories;
 
-import models.Playlist;
 import models.Song;
 import database.DatabaseConfiguration;
 import models.SongHistory;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
 
 public class SongHistoryRepo {
     private static Connection connection = DatabaseConfiguration.getConnection();

@@ -1,4 +1,5 @@
-// todo testing
+// todo playlist testing
+// todo general testing
 // todo try-catch for string where the input should be string
 // todo if enough time, prints like "no songs with this name"
 
