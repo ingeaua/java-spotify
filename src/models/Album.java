@@ -46,11 +46,6 @@ public class Album
         this.genre = genre;
     }
 
-    public static Integer getNumAlbumsAdded() {
-//        todo: aici tre sa imi numere cate is in bd
-        return albumsCounter;
-    }
-
     public static void setNumAlbumsAdded(Integer numAlbumsAdded) {
         Album.albumsCounter = numAlbumsAdded;
     }

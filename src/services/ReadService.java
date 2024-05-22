@@ -92,4 +92,17 @@ public class ReadService {
         return new User(username, password, email);
 
     }
+
+    public static Playlist readPlaylist() {
+        System.out.println("Enter name:");
+        System.out.print(">");
+        String name= scanner.nextLine();
+
+        System.out.println("Enter description:");
+        System.out.print(">");
+        String description= scanner.nextLine();
+
+
+        return new Playlist(name, description);
+    }
 }

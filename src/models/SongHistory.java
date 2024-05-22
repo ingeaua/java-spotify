@@ -29,6 +29,21 @@ public class SongHistory {
             dates.add(timeDate);
             history.put(song, dates);
         }
+    }
+
+    public void showTopSong() {
+        Song topSong = null;
+        int maxPlays = 0;
+        for (Song song : history.keySet()) {
+            int numPlays = history.get(song).size();
+            if (numPlays > maxPlays) {
+                maxPlays = numPlays;
+                topSong = song;
+            }
+        }
+
+        System.out.println("Your favourite song all-time is " + topSong.getTitle() + " by " + topSong.getArtist() +
+                            " and you listened to it " + maxPlays + " times! :)");
 
     }
 }

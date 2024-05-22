@@ -76,10 +76,9 @@ public class UserRepo {
 
             while (resultSet.next()) {
                 String email = resultSet.getString("email");
-                String username = resultSet.getString("email");
                 String password = resultSet.getString("password");
 
-                System.out.println("User " + userCounter + ":\nusername: " + email + " \npassword: " + password);
+                System.out.println("User " + userCounter + ":\nemail: " + email + " \npassword: " + password);
                 userCounter += 1;
 
             }
@@ -89,5 +88,19 @@ public class UserRepo {
             System.out.println("Error when showing users!");
         }
 
+    }
+
+    public static void deleteUser(String userName) {
+        try {
+            String query = "DELETE FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, userName);
+            statement.executeUpdate();
+            System.out.println("Your account was deleted!");
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when deleting user!");
+        }
     }
 }

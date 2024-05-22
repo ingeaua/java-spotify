@@ -68,6 +68,10 @@ public class Playlist {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public void setPlaylistName(String playlistName) {
         this.playlistName = playlistName;
     }

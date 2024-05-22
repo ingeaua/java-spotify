@@ -4,6 +4,7 @@ import models.*;
 import repositories.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Menu {
@@ -111,52 +112,55 @@ public class Menu {
                     deletePodcast();
                     break;
                 case 12:
-                     addSongInFrontQueue();
+                    addSongInFrontQueue();
                     break;
                 case 13:
-                     addSongInBackQueue();
+                    addSongInBackQueue();
                     break;
                 case 14:
-                     addAlbumInQueue();
+                    addAlbumInQueue();
                     break;
                 case 15:
-                     addPlaylistInQueue();
+                    addPlaylistInQueue();
                     break;
                 case 16:
-                     addRandomSongInQueue();
+                    addRandomSongInQueue();
                     break;
                 case 17:
-                     listenSongsFromQueue();
+                    listenSongsFromQueue();
                     break;
                 case 18:
-                     clearQueue();
+                    clearQueue();
                     break;
                 case 19:
-                     showQueue();
+                    showQueue();
                     break;
                 case 20:
-                    // createPlaylist();
+                    createPlaylist();
                     break;
                 case 21:
-                    // addSongToPlaylist();
+                    addSongToPlaylist();
                     break;
                 case 22:
-                    // showUserPlaylists();
+                    showUserPlaylists();
                     break;
                 case 23:
-                    // deletePlaylist();
+                    deletePlaylist();
                     break;
                 case 24:
-                    // showReleaseRadar();
+                    //showReleaseRadar(); todo
                     break;
                 case 25:
-                    // showMostListenedSong();
+                    showMostListenedSong();
                     break;
                 case 26:
-                    // showTotalTimeListenedToday();
+                    //showTotalTimeListenedToday(); todo
                     break;
                 case 27:
-                    // deleteAccount();
+                     boolean deleted = deleteAccount();
+                     if (deleted) {
+                         option = 0;
+                     }
                     break;
                 case 0:
                     System.out.println("Thank you, goodbye!");
@@ -258,7 +262,7 @@ public class Menu {
     private void addAlbumInQueue() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The albums in the app are:");
-        showSongs();
+        showAlbums();
         System.out.println("Enter album's title to add to queue:");
         System.out.print(">");
         String title= scanner.nextLine();
@@ -291,5 +295,59 @@ public class Menu {
     }
     private void showQueue() {
         loggedInUser.showQueue();
+    }
+
+    private boolean deleteAccount() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Are you sure you want to delete your account? (y/n)");
+        String option= scanner.nextLine().toLowerCase();
+        if (option.equals("y")) {
+            UserRepo.deleteUser(loggedInUser.getUsername());
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private void createPlaylist() {
+        Playlist playlist = ReadService.readPlaylist();
+        playlist.setUserName(loggedInUser.getUsername());
+        PlaylistRepo.addPlaylist(playlist);
+    }
+
+    private void showUserPlaylists() {
+        PlaylistRepo.getPlaylistsByUser(loggedInUser.getUsername());
+    }
+
+    private void deletePlaylist() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Your playlists are:");
+        showUserPlaylists();
+        System.out.println("Enter playlist's name to delete:");
+        System.out.print(">");
+        String name= scanner.nextLine();
+        PlaylistRepo.deletePlaylist(name);
+    }
+
+    private void addSongToPlaylist() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Your playlists are:");
+        showUserPlaylists();
+        System.out.println("Enter playlist's name where you would like to add a song:");
+        System.out.print(">");
+        String playlistName= scanner.nextLine();
+        System.out.println("The songs in the app are:");
+        showSongs();
+        System.out.println("Enter song's title to add to " + playlistName + " playlist:");
+        System.out.print(">");
+        String title= scanner.nextLine();
+        Song song = SongRepo.getSongByTitle(title);
+        PlaylistRepo.addSongToPlaylist(song.getTitle(), playlistName);
+        loggedInUser.getPlaylist(playlistName).addSong(song);
+    }
+
+    private void showMostListenedSong() {
+        loggedInUser.showMostListenedSong();
     }
 }

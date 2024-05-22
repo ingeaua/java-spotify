@@ -1,10 +1,7 @@
 package models;
 
 import java.time.LocalDateTime;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 import repositories.SongHistoryRepo;
 import repositories.SongRepo;
@@ -43,6 +40,15 @@ public class User {
         this.history = new SongHistory(history);
     }
 
+    public Playlist getPlaylist(String playlistName) {
+        for (Playlist playlist : playlists) {
+            if (Objects.equals(playlist.getPlaylistName(), playlistName)) {
+                return playlist;
+            }
+        }
+        return null;
+    }
+
     public void addSongToQueueFront(Song song) { queue.addFirst(song); }
 
     public void addSongToQueueBack(Song song) {
@@ -60,9 +66,11 @@ public class User {
         for (Song song : queue) {
             System.out.println("Song " + songCountQueue + ": " + song.getTitle() + " by " + song.getArtist()
                                 + " " + SongRepo.formatDuration(song.getDuration()));
+            songCountQueue += 1;
         }
     }
 
+    // todo here I have an exception if the same song is in the queue 2 times because the entry in database is duplicated
     public void listenToQueue() {
         for (Song song : queue) {
             history.addSongToHistory(song, LocalDateTime.now());
@@ -81,5 +89,9 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public void showMostListenedSong() {
+       history.showTopSong();
     }
 }
