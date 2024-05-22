@@ -6,10 +6,20 @@ import database.DatabaseConfiguration;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SongRepo {
     private static Connection connection = DatabaseConfiguration.getConnection();
     public SongRepo (){}
+
+    public static String formatDuration(int seconds) {
+        String minutesString = String.valueOf(seconds / 60);
+        String secondsString = String.valueOf(seconds % 60);
+        if (secondsString.length() == 1)
+            secondsString = "0" + secondsString;
+        return minutesString + ":" + secondsString;
+    }
+
     public static void addSong(Song song) {
         try
         {
@@ -126,6 +136,68 @@ public class SongRepo {
 
     }
 
+    public static List<Song> getSongsByAlbum(String albumName) {
+        try
+        {
+            String query = "SELECT * FROM songs WHERE albumTitle = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, albumName);
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Song> songs = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String songName = resultSet.getString("title");
+
+                Song song = getSongByTitle(songName);
+                songs.add(song);
+
+            }
+
+            return songs;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when getting Songs (by playlistName)!");
+            return null;
+        }
+    }
+
+    public static Song getRandomSong() {
+        try {
+            String query = "SELECT COUNT(*) AS total FROM songs";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            resultSet.next();
+
+            int numOfSongs = resultSet.getInt("total");
+
+            Random rand = new Random();
+            int randomIndex = rand.nextInt(numOfSongs);
+
+            String query2 = "SELECT * FROM songs LIMIT 1 OFFSET ?";
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            statement2.setInt(1, randomIndex);
+            ResultSet resultSet2 = statement2.executeQuery();
+
+            resultSet2.next();
+
+            String genre = resultSet2.getString("genre");
+            String artist = resultSet2.getString("artist");
+            String album = resultSet2.getString("albumTitle");
+            int duration = resultSet2.getInt("duration");
+            String title = resultSet2.getString("title");
+
+            return new Song(title, genre, artist, duration, album);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when getting a random song!");
+            return null;
+        }
+    }
 
 
 }

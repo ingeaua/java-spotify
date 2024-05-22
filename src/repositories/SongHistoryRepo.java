@@ -45,4 +45,24 @@ public class SongHistoryRepo {
         }
     }
 
+    public static void addSongToHistory(String userName, String songTitle) {
+        try
+        {
+            String query = "INSERT INTO history (userName, songTitle, timestamp) " +
+                    "VALUES (?, ?, ?);";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, userName);
+            statement.setString(2, songTitle);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            statement.setTimestamp(3, timestamp);
+
+            statement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when adding song in history!");
+        }
+    }
+
 }

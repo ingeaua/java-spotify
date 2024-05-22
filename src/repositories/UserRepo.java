@@ -27,8 +27,6 @@ public class UserRepo {
             statement.setString(3, user.getEmail());
 
             statement.executeUpdate();
-//            una the playlist uri cumva
-//            si una de history todo
 
         } catch (SQLException e) {
             e.printStackTrace();

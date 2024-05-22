@@ -1,9 +1,15 @@
 package models;
 
 import java.util.Objects;
-import java.util.Set;
+import database.DatabaseConfiguration;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Song {
+
+    private static Connection connection = DatabaseConfiguration.getConnection();
 
     // attributes: title, genre, artist, duration, (album if the song is part of an album)
     private static Integer songsCounter;
@@ -51,20 +57,6 @@ public class Song {
         this.album = album;
     }
 
-//    public Song(Song song) todo: nu ar trebui sa am nevoie de asta dar o sa vad mai tz
-//    {
-//        this.title = song.title;
-//        this.genre = song.genre;
-//        this.artist = song.artist;
-//        this.duration = song.duration;
-//        this.album = song.album;
-//    }
-
-    public static Integer getSongsCount() {
-//        TODO: aici trebuie calculat din numarul de melodii din baza de date
-        return songsCounter;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -104,7 +96,6 @@ public class Song {
     public void setAlbum(String album) {
         this.album = album;
     }
-
 
 
 }
