@@ -10,8 +10,22 @@ public class SongHistory {
 
     private HashMap<Song, ArrayList<LocalDateTime>> history;
 
-    SongHistory() {
+    public SongHistory() {
         history = new HashMap<>();
     }
 
+    public SongHistory(SongHistory history) {
+        this.history = new HashMap<>(history.history);
+    }
+
+    public void addSongToHistory(Song song, LocalDateTime timeDate) {
+        if (history.containsKey(song)) {
+            history.get(song).add(timeDate);
+        } 
+        else {
+            ArrayList<LocalDateTime> dates = new ArrayList<>();
+            dates.add(timeDate);
+            history.put(song, dates);
+        }
+    }
 }

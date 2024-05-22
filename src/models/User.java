@@ -29,4 +29,25 @@ public class User {
         this.queue = new ArrayDeque<>();
         this.history = new SongHistory();
     }
+
+    public User(String username, String password, String email, List<Playlist> playlists, SongHistory history) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.playlists = new ArrayList<>(playlists);
+        this.queue = new ArrayDeque<>();
+        this.history = new SongHistory(history);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

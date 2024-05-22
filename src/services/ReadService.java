@@ -2,6 +2,7 @@ package services;
 import models.*;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Scanner;
 
@@ -73,5 +74,22 @@ public class ReadService {
         String topic= scanner.nextLine();
 
         return new Podcast(name, creator, duration, topic);
+    }
+
+    public static User readUser() {
+        System.out.println("Enter username:");
+        System.out.print(">");
+        String username= scanner.nextLine();
+
+        System.out.println("Enter password:");
+        System.out.print(">");
+        String password= scanner.nextLine();
+
+        System.out.println("Enter email:");
+        System.out.print(">");
+        String email= scanner.nextLine();
+
+        return new User(username, password, email);
+
     }
 }

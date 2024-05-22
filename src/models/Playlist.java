@@ -9,18 +9,20 @@ public class Playlist {
     private String playlistName;
     private String description;
     private List<Song> songs;
+    private String userName;
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Playlist playlist = (Playlist) o;
-        return Objects.equals(playlistName, playlist.playlistName) && Objects.equals(description, playlist.description) && Objects.equals(songs, playlist.songs);
+        return Objects.equals(playlistName, playlist.playlistName) &&  Objects.equals(userName, playlist.userName) && Objects.equals(description, playlist.description) && Objects.equals(songs, playlist.songs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playlistName, description, songs);
+        return Objects.hash(playlistName, description, songs, userName);
     }
 
     public Playlist()
@@ -28,24 +30,26 @@ public class Playlist {
         this.playlistName = "";
         this.songs = new ArrayList<>();
         this.description = null;
+        this.userName = null;
     }
     public Playlist(String playlistName)
     {
         this.playlistName = playlistName;
         this.songs = new ArrayList<>();
         this.description = null;
+        this.userName = null;
     }
     public Playlist(String playlistName,String description)
     {
         this.playlistName = playlistName;
         this.description = description;
         this.songs = new ArrayList<>();
+        this.userName = null;
     }
-    public Playlist(Playlist p)
-    {
-        this.playlistName = p.playlistName;
-        this.description = p.description;
-        this.songs = new ArrayList<>(p.songs);
+    public Playlist(String playlistName, String description, List<Song> songs) {
+        this.playlistName = playlistName;
+        this.description = description;
+        this.songs = songs;
     }
 
     public String getDescription() {
@@ -58,6 +62,10 @@ public class Playlist {
 
     public String getPlaylistName() {
         return playlistName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public void setPlaylistName(String playlistName) {

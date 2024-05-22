@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Menu {
     private static Menu instance;
     private User loggedInUser;
-    private Menu(User user) {}
+    private Menu(User user) {loggedInUser = user;}
 
     private void showGeneralOptions() {
 
@@ -24,6 +24,10 @@ public class Menu {
         System.out.println("8. Delete a song");
         System.out.println("9. Delete an album");
         System.out.println("10. Delete a podcast");
+        System.out.println("------------- User options -------------");
+        // todo: fa vere user options gen
+        System.out.println("\n0. Exit app");
+
 
     }
 
@@ -52,7 +56,7 @@ public class Menu {
                 case 4 -> showSongs();
                 case 5 -> showAlbums();
                 case 6 -> showPodcasts();
-//                case 7 -> showUsers();
+                case 7 -> showUsers();
                 case 8 -> deleteSong();
                 case 9 -> deleteAlbum();
                 case 10 -> deletePodcast();
@@ -66,34 +70,36 @@ public class Menu {
         scanner.close();
     }
 
-    public void addSong() {
+    private void addSong() {
         Song song = ReadService.readSong(null);
         SongRepo.addSong(song);
     }
 
-    public void addAlbum() {
+    private void addAlbum() {
         Album album = ReadService.readAlbum();
         AlbumRepo.addAlbum(album);
     }
 
-    public void addPodcast() {
+    private void addPodcast() {
         Podcast podcast = ReadService.readPodcast();
         PodcastRepo.addPodcast(podcast);
     }
 
-    public void showSongs() {
+    private void showSongs() {
         SongRepo.showSongs();
     }
 
-    public void showAlbums() {
+    private void showAlbums() {
         AlbumRepo.showAlbums();
     }
 
-    public void showPodcasts() {
+    private void showPodcasts() {
         PodcastRepo.showPodcasts();
     }
 
-    public void deleteSong() {
+    private void showUsers() { UserRepo.showUsers(); }
+
+    private void deleteSong() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The songs in the app are:");
         showSongs();
@@ -103,7 +109,7 @@ public class Menu {
         SongRepo.deleteSong(title);
     }
 
-    public void deleteAlbum() {
+    private void deleteAlbum() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The album in the app are:");
         showAlbums();
@@ -113,7 +119,7 @@ public class Menu {
         AlbumRepo.deleteAlbum(title);
     }
 
-    public void deletePodcast() {
+    private void deletePodcast() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The podcasts in the app are:");
         showPodcasts();

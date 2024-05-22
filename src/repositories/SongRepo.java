@@ -1,8 +1,11 @@
 package repositories;
 
+import models.Playlist;
 import models.Song;
 import database.DatabaseConfiguration;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SongRepo {
     private static Connection connection = DatabaseConfiguration.getConnection();
@@ -66,6 +69,63 @@ public class SongRepo {
         }
 
     }
+
+    public static Song getSongByTitle(String title) {
+        try {
+            String query = "SELECT * FROM songs WHERE title = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            ResultSet resultSet= statement.executeQuery();
+
+            if (resultSet.next()) {
+                String genre = resultSet.getString("genre");
+                String artist = resultSet.getString("artist");
+                String album = resultSet.getString("albumTitle");
+                Integer duration = resultSet.getInt("duration");
+
+                return new Song(title, genre, artist, duration, album);
+            }
+
+            return null;
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when getting song by title!");
+            return null;
+        }
+    }
+
+    public static List<Song> getSongsByPlaylist(String playlistName) {
+
+        try
+        {
+            String query = "SELECT * FROM songs_playlists WHERE playlistName = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, playlistName);
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Song> songs = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String songName = resultSet.getString("songName");
+
+                Song song = getSongByTitle(songName);
+                songs.add(song);
+
+            }
+
+            return songs;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error when getting Songs (by playlistName)!");
+            return null;
+        }
+
+    }
+
 
 
 }
