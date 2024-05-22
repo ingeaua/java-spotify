@@ -3,6 +3,7 @@ package services;
 import models.*;
 import repositories.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -12,6 +13,8 @@ public class Menu {
     private User loggedInUser;
     private ReleaseRadar releaseRadar;
     private Menu(User user) {loggedInUser = user;}
+
+    AuditService auditService = AuditService.getInstance();
 
     private void showGeneralOptions() {
 
@@ -65,7 +68,7 @@ public class Menu {
         return instance;
     }
 
-    public void run() {
+    public void run() throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         releaseRadar = new ReleaseRadar();
@@ -81,90 +84,118 @@ public class Menu {
             switch (option) {
                 case 1:
                     addSong();
+                    auditService.logAction("Add song");
                     break;
                 case 2:
                     addAlbum();
+                    auditService.logAction("Add album");
                     break;
                 case 3:
                     addPodcast();
+                    auditService.logAction("Add podcast");
                     break;
                 case 4:
                     showSongs();
+                    auditService.logAction("Show songs");
                     break;
                 case 5:
                     showAlbums();
+                    auditService.logAction("Show albums");
                     break;
                 case 6:
                     showPodcasts();
+                    auditService.logAction("Show podcasts");
                     break;
                 case 7:
                     showUsers();
+                    auditService.logAction("Show users");
                     break;
                 case 8:
                     showPlaylists();
+                    auditService.logAction("Show playlists");
                     break;
                 case 9:
                     deleteSong();
+                    auditService.logAction("Delete song");
                     break;
                 case 10:
                     deleteAlbum();
+                    auditService.logAction("Delete album");
                     break;
                 case 11:
                     deletePodcast();
+                    auditService.logAction("Delete podcast");
                     break;
                 case 12:
                     addSongInFrontQueue();
+                    auditService.logAction("Add song in front of queue");
                     break;
                 case 13:
                     addSongInBackQueue();
+                    auditService.logAction("Add song in back of queue");
                     break;
                 case 14:
                     addAlbumInQueue();
+                    auditService.logAction("Add album to queue");
                     break;
                 case 15:
                     addPlaylistInQueue();
+                    auditService.logAction("Add playlist to queue");
                     break;
                 case 16:
                     addRandomSongInQueue();
+                    auditService.logAction("Add random song to queue");
                     break;
                 case 17:
                     listenSongsFromQueue();
+                    auditService.logAction("Listen to queue");
                     break;
                 case 18:
                     clearQueue();
+                    auditService.logAction("Clear queue");
                     break;
                 case 19:
                     showQueue();
+                    auditService.logAction("Show queue");
                     break;
                 case 20:
                     createPlaylist();
+                    auditService.logAction("Create playlist");
                     break;
                 case 21:
                     addSongToPlaylist();
+                    auditService.logAction("Add song to playlist");
                     break;
                 case 22:
                     showUserPlaylists();
+                    auditService.logAction("Show user playlists");
                     break;
                 case 23:
                     deletePlaylist();
+                    auditService.logAction("Delete playlist");
                     break;
                 case 24:
                     showReleaseRadar();
+                    auditService.logAction("Show release radar");
                     break;
                 case 25:
                     showMostListenedSong();
+                    auditService.logAction("Show most listened song");
                     break;
                 case 26:
                     showTotalTimeListenedToday();
+                    auditService.logAction("Show time listened today");
                     break;
                 case 27:
                      boolean deleted = deleteAccount();
                      if (deleted) {
+                         auditService.logAction("Delete account");
                          option = 0;
                      }
                     break;
                 case 0:
                     System.out.println("Thank you, goodbye!");
+                    auditService.logAction("Log out");
                     break;
                 default:
                     System.out.println("Wrong option, choose a valid one!");

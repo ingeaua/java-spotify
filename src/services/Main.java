@@ -6,11 +6,13 @@ package services;
 
 import models.User;
 import repositories.UserRepo;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -35,7 +37,7 @@ public class Main {
 
     }
 
-    private static void logIn() {
+    private static void logIn() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter email:");
         System.out.print(">");
@@ -54,7 +56,7 @@ public class Main {
         }
     }
 
-    private static void createUser() {
+    private static void createUser() throws IOException {
         User user = ReadService.readUser();
         UserRepo.addUser(user);
 
