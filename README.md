@@ -37,7 +37,8 @@ Services contain the business logic and interact with repositories and models.
 
 1. **Setup Database**: Ensure MySQL is installed and a database is created.
 2. **Database Configuration**: Update the `DatabaseConfiguration` class with your database credentials.
-3. **Build and Run**: Compile and run the `Main` class to start the application.
+3. **Tables creation**: Run the SQL queries in `table_creator` on your schema.
+4. **Build and Run**: Compile and run the `Main` class to start the application.
 
 ## Login / register menu
 
