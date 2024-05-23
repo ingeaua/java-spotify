@@ -1,0 +1,61 @@
+CREATE TABLE `albums` (
+  `title` varchar(45) NOT NULL,
+  `artist` varchar(45) DEFAULT NULL,
+  `genre` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `history` (
+  `userName` varchar(45) NOT NULL,
+  `songTitle` varchar(45) NOT NULL,
+  `timestamp` timestamp NOT NULL,
+  PRIMARY KEY (`userName`,`songTitle`,`timestamp`),
+  KEY `hist_fk_songTitle_idx` (`songTitle`),
+  CONSTRAINT `hist_fk_songTitle` FOREIGN KEY (`songTitle`) REFERENCES `songs` (`title`) ON DELETE CASCADE,
+  CONSTRAINT `hist_fk_userName` FOREIGN KEY (`userName`) REFERENCES `users` (`username`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `playlists` (
+  `name` varchar(45) NOT NULL,
+  `description` varchar(45) NOT NULL,
+  `userName` varchar(45) NOT NULL,
+  PRIMARY KEY (`name`),
+  KEY `playlist_user_fk_idx` (`userName`),
+  CONSTRAINT `playlist_user_fk` FOREIGN KEY (`userName`) REFERENCES `users` (`username`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `podcasts` (
+  `name` varchar(45) NOT NULL,
+  `creator` varchar(45) NOT NULL,
+  `duration` int NOT NULL,
+  `topic` varchar(45) NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `songs` (
+  `title` varchar(45) NOT NULL,
+  `genre` varchar(45) NOT NULL,
+  `artist` varchar(45) NOT NULL,
+  `duration` int NOT NULL,
+  `albumTitle` varchar(45) NOT NULL,
+  PRIMARY KEY (`title`),
+  KEY `song_albums_fk_idx` (`albumTitle`),
+  KEY `song_album_fk_idx` (`albumTitle`),
+  CONSTRAINT `song_album_fk` FOREIGN KEY (`albumTitle`) REFERENCES `albums` (`title`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `songs_playlists` (
+  `songName` varchar(45) NOT NULL,
+  `playlistName` varchar(45) NOT NULL,
+  PRIMARY KEY (`songName`,`playlistName`),
+  KEY `m-m_song_playlist_playlistname_idx` (`playlistName`),
+  CONSTRAINT `m-m_song_playlist_playlistname` FOREIGN KEY (`playlistName`) REFERENCES `playlists` (`name`) ON DELETE CASCADE,
+  CONSTRAINT `m-m_song_playlist_songname` FOREIGN KEY (`songName`) REFERENCES `songs` (`title`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `users` (
+  `username` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
